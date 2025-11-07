@@ -1,21 +1,36 @@
-# Pokédex – Exercise 1.3 (JavaScript Basics Part 2)
+# Pokédex – Exercise 1.5 (JavaScript DOM Manipulation)
 
-This project is part of the **CareerFoundry Software Engineering Course**,  
-Exercise **1.3: JavaScript Basics Part 2**.
-
-The goal of this exercise is to practice **for loops** and **conditional statements** in JavaScript by building a simple Pokédex app.
+This project is part of the **CareerFoundry Software Engineering Course**.
 
 ---
 
-## 🧠 Learning Objectives
+## 🎯 Goal of this Exercise
 
-- Create and use an array of Pokémon objects  
-- Iterate over the array using a **for loop**  
-- Display Pokémon names and heights using **document.write()**  
-- Add a **conditional statement** to highlight the tallest Pokémon with the message `"Wow, that's big!"`  
-- Use HTML inside strings and basic styling to make the app more readable  
+The goal of **Exercise 1.5** is to build on the previous exercises (1.3 and 1.4) and use **DOM manipulation** to display Pokémon data directly in the **browser interface**, rather than in the console.
 
 ---
 
-## 🗂 Project Structure
+## 🧩 What’s new in this version
 
+✅ Pokémon now appear as styled cards in the browser (using the DOM).  
+✅ Added CSS styling for a clean, modern Pokédex layout.  
+✅ Conditional message “Wow, that’s big!” is displayed for the tallest Pokémon.  
+✅ Color coding based on Pokémon type (grass, fire, water, rock).  
+✅ Removed `document.write()` and `console.log()` — replaced with `createElement()` and `appendChild()`.
+
+---
+
+## 💡 Technologies used
+
+- **HTML5**
+- **CSS3**
+- **JavaScript (ES6)**
+
+---
+
+## 🖥️ Preview
+
+Example of the browser output:
+
+
+-
