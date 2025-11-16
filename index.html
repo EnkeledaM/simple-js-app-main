@@ -1,19 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Pokémon List</title>
-    <link rel="stylesheet" href="css/styles.css" />
-  </head>
-  <body>
-    <div class="page-container">
-      <h1 class="page-title">Pokémon List</h1>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pokémon App</title>
 
-      <!-- KETU DO MBUSHET LISTA NGA JAVASCRIPT -->
-      <ul class="pokemon-list"></ul>
+  <!-- CSS file -->
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+
+  <h1>Pokémon List</h1>
+
+  <!-- Këtu do të futen butonat e Pokemon nga scripts.js -->
+  <ul class="pokemon-list"></ul>
+
+  <!-- Modal për detajet e Pokémon -->
+  <div class="modal" id="pokemon-modal">
+    <div class="modal-content">
+      <span class="modal-close">&times;</span>
+
+      <h1 class="modal-title"></h1>
+
+      <img class="modal-img" alt="Pokemon image">
+
+      <p class="modal-height"></p>
+      <p class="modal-types"></p>
     </div>
+  </div>
 
-    <script src="js/scripts.js"></script>
-  </body>
+  <!-- Polyfills – duhet të vijnë PARA scripts.js -->
+  <script src="js/promise-polyfill.js"></script>
+  <script src="js/fetch-polyfill.js"></script>
+
+  <!-- JavaScript kryesor -->
+  <script src="scripts.js"></script>
+
+</body>
 </html>
 
