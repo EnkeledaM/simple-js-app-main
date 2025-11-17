@@ -1,40 +1,29 @@
+# Pokémon App – Exercise 1.7
 
----
+This project is part of the CareerFoundry Full-Stack Web Development Program.
 
-## 🧠 What I Learned
+## Goal
 
-- How to fetch data from a REST API  
-- How Promises and async/await logic work  
-- Building reusable UI components without libraries  
-- Managing state inside an IIFE  
-- Showing loading indicators during async operations  
-- Debugging using browser DevTools  
-- Improving user experience with custom modal interactions  
+The goal of Exercise 1.7 is to:
 
----
+- Load a list of Pokémon from the external PokéAPI using `fetch()`
+- Work with asynchronous JavaScript and Promises
+- Replace a static list with data loaded from an API
+- Load additional details for each Pokémon on demand
+- Dynamically create a list of buttons in the DOM
 
-## ⚙️ How to Run the Project
+## What I implemented
 
-1. Clone or download the repository  
-2. Open the project in VS Code (or any editor)  
-3. Start **Live Server**  
-4. Open `index.html` in the browser  
-5. The Pokémon list will load automatically  
+- Added Promise and Fetch polyfills
+- Replaced the static Pokémon array with an empty array
+- Implemented `loadList()` to fetch all Pokémon (name + detailsUrl)
+- Implemented `loadDetails()` to fetch image, height and types
+- Implemented `addListItem()` to create a button for each Pokémon
+- Implemented `showDetails()` to load details and log the full Pokémon object in the console
+- (Bonus) Added a simple loading message while data is being fetched
 
----
+## How to run
 
-## 📌 Future Improvements
-
-- Add a search bar to filter Pokémon  
-- Add sorting (by height, name, type)  
-- Add pagination  
-- Add dark mode toggle  
-- Deploy to GitHub Pages or Netlify  
-
----
-
-## ✔ Status
-
-This project fully meets all requirements of **CareerFoundry Exercise 1.7**  
-and includes the optional **Bonus Feature** (loading indicator).
-
+- Open `index.html` in a browser (preferably using Live Server)
+- Wait for the Pokémon list to load
+- Open the browser console and click on a Pokémon to see its details
