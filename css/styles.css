@@ -1,58 +1,90 @@
 /* Baza e faqes */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f7f7f7;
   margin: 0;
   padding: 20px;
-  text-align: center;
+  background-color: #f5f5f5;
 }
 
 h1 {
-  color: #333;
-  margin-bottom: 20px;
+  text-align: center;
 }
 
-/* Lista e Pokémon */
+/* Lista e Pokémon-ëve */
 .pokemon-list {
   list-style: none;
   padding: 0;
-  margin: 0 auto;
+  margin: 20px auto;
   max-width: 400px;
 }
 
-/* Elementët e listës */
 .pokemon-list li {
-  margin: 8px 0;
+  margin-bottom: 10px;
 }
 
-/* Butonat e Pokémon */
+/* Butonat e Pokémon-ëve */
 .pokemon-button {
   width: 100%;
-  padding: 10px 0;
-  border-radius: 6px;
-  border: 2px solid #3b4cca;
+  padding: 10px;
+  border: none;
   background-color: #ffcb05;
-  color: #222;
+  color: #2a75bb;
   font-size: 16px;
-  font-weight: bold;
   cursor: pointer;
-  text-transform: capitalize; /* kjo zëvendëson capitalize() në JS */
-  transition: 0.2s;
+  border-radius: 4px;
 }
 
 .pokemon-button:hover {
-  background-color: #ffe066;
-  transform: scale(1.02);
+  background-color: #f5b800;
 }
 
-/* BONUS: mesazhi Loading */
-.loading-message {
+/* ========================= */
+/*        MODAL 1.8          */
+/* ========================= */
+
+/* Fshi modal-in në fillim */
+#modal-container {
+  display: none;
+}
+
+/* Shfaq kur ka klasën .is-visible */
+#modal-container.is-visible {
   position: fixed;
-  top: 10px;
-  right: 10px;
-  background-color: #333;
-  color: white;
-  padding: 8px 14px;
-  border-radius: 6px;
-  font-size: 14px;
+  padding: 20px;
+  box-sizing: border-box;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+
+  z-index: 999;
+  overflow: auto;
+  display: grid;
+  text-align: center;
+}
+
+/* Kutia e bardhë e modal-it */
+.modal {
+  background: white;
+  margin: auto;
+  padding: 20px;
+  max-width: 400px;
+}
+
+/* Butoni i mbylljes në modal */
+.modal-close {
+  float: right;
+  border: none;
+  background: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Figura e Pokémon-it – responsive */
+.modal img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 10px auto;
 }
