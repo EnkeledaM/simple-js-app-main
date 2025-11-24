@@ -1,29 +1,58 @@
-# Pokémon App – Exercise 1.7
+# Exercise 1.8 – Pokémon App  
+CareerFoundry – Intro to JavaScript / AJAX & API Interactions
 
-This project is part of the CareerFoundry Full-Stack Web Development Program.
+## 📌 Overview  
+This project is part of Exercise 1.8, where the goal was to build a small JavaScript application that loads data from an external API (PokeAPI), displays the results dynamically, and shows item details inside a modal window.  
+The entire logic is implemented using an IIFE and follows the patterns learned in this exercise.
 
-## Goal
+---
 
-The goal of Exercise 1.7 is to:
+## ✅ Requirements Completed
 
-- Load a list of Pokémon from the external PokéAPI using `fetch()`
-- Work with asynchronous JavaScript and Promises
-- Replace a static list with data loaded from an API
-- Load additional details for each Pokémon on demand
-- Dynamically create a list of buttons in the DOM
+### 1. Load Pokémon list using Fetch API  
+- The app connects to **https://pokeapi.co/api/v2/pokemon/**  
+- The list is saved inside an IIFE (`pokemonRepository`).  
+- All Pokémon are displayed as buttons inside a `<ul>` element.
 
-## What I implemented
+### 2. Show Pokémon details in a modal  
+When a user clicks a Pokémon button:  
+- The detailed data (height, image, types) is fetched from the API.  
+- A modal is generated dynamically with the Pokémon information.
 
-- Added Promise and Fetch polyfills
-- Replaced the static Pokémon array with an empty array
-- Implemented `loadList()` to fetch all Pokémon (name + detailsUrl)
-- Implemented `loadDetails()` to fetch image, height and types
-- Implemented `addListItem()` to create a button for each Pokémon
-- Implemented `showDetails()` to load details and log the full Pokémon object in the console
-- (Bonus) Added a simple loading message while data is being fetched
+### 3. Modal closing functionality (all 3 required methods)
+- Clicking the **Close** button  
+- Clicking **outside the modal**  
+- Pressing the **Escape (ESC)** key  
 
-## How to run
+### 4. Loading Indicator  
+A simple loading message/animation appears while the app fetches API data.
 
-- Open `index.html` in a browser (preferably using Live Server)
-- Wait for the Pokémon list to load
-- Open the browser console and click on a Pokémon to see its details
+### 5. Code Structure (IIFE)  
+The whole application is wrapped inside an IIFE to avoid polluting the global namespace.
+
+---
+
+## ⭐ Bonus Task 1 – Form Validation (Portfolio Website)  
+As part of Bonus Task 1, I implemented **custom JavaScript form validation** in my portfolio website (`contact.html`).  
+The validation includes:  
+- Required fields (name, email, message)  
+- Proper email format  
+- Inline error messages  
+- Error removal once the input is corrected  
+
+This work is included in:  
+`portfolio-site_8/contact.html`  
+`portfolio-site_8/js/contact-validation.js`
+
+---
+
+## ⭐ Bonus Task 2 – Additional Interaction  
+I added enhanced UI interactions to the Pokémon App, including:  
+- Smooth hover animations for Pokémon buttons  
+- Transition effects  
+- A more polished modal appearance  
+These additions improve usability and demonstrate interactivity beyond the base requirements.
+
+---
+
+## 📁 File Structure
