@@ -32,20 +32,6 @@ The whole application is wrapped inside an IIFE to avoid polluting the global na
 
 ---
 
-## ⭐ Bonus Task 1 – Form Validation (Portfolio Website)  
-As part of Bonus Task 1, I implemented **custom JavaScript form validation** in my portfolio website (`contact.html`).  
-The validation includes:  
-- Required fields (name, email, message)  
-- Proper email format  
-- Inline error messages  
-- Error removal once the input is corrected  
-
-This work is included in:  
-`portfolio-site_8/contact.html`  
-`portfolio-site_8/js/contact-validation.js`
-
----
-
 ## ⭐ Bonus Task 2 – Additional Interaction  
 I added enhanced UI interactions to the Pokémon App, including:  
 - Smooth hover animations for Pokémon buttons  
