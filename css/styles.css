@@ -88,3 +88,45 @@ h1 {
   display: block;
   margin: 10px auto;
 }
+body {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  /* për navbar fixed-top që të mos mbulojë përmbajtjen */
+  padding-top: 5rem;
+}
+
+/* Mesazhi i loading – pozicionim në krye të faqes */
+.alert--info {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 0 0 5px 5px;
+  font-size: 0.9rem;
+  z-index: 1031; /* pak mbi navbar-in */
+}
+
+/* Container pak më i ngushtë në ekran të madh (opsionale) */
+.starter-template {
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+/* Stil i butonave të listës (shtesë mbi Bootstrap) */
+.pokemon-list__button {
+  width: 100%;
+  text-align: left;
+}
+
+/* Figura në modal – qendër, responsive */
+.pokemon-image {
+  display: block;
+  margin: 0 auto 1rem;
+}
+
+/* Tekstet në modal */
+.pokemon-height,
+.pokemon-types {
+  margin-bottom: 0.5rem;
+}

@@ -1,42 +1,15 @@
-let pokemonRepository = (function () {
-  let pokemonList = [];
-  let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
+/* global fetch */
 
-  // Container-i për modal-in
-  let modalContainer = document.querySelector('#modal-container');
+const pokemonRepository = (function () {
+  const pokemonList = [];
+  const apiUrl = "https://pokeapi.co/api/v2/pokemon/?limit=150";
 
-  // Indeksi i Pokémon-it aktual në modal (për swipe / next / prev)
-  let currentPokemonIndex = null;
-
-  // =========================
-  //   LOADING MESSAGE (opsionale)
-  // =========================
-  function showLoadingMessage() {
-    let loadingElement = document.querySelector('.loading-message');
-    if (loadingElement) {
-      loadingElement.style.display = 'block';
-    }
-  }
-
-  function hideLoadingMessage() {
-    let loadingElement = document.querySelector('.loading-message');
-    if (loadingElement) {
-      loadingElement.style.display = 'none';
-    }
-  }
-
-  // =========================
-  //   CRUD BAZË PËR LISTËN
-  // =========================
   function add(pokemon) {
-    if (
-      typeof pokemon === 'object' &&
-      'name' in pokemon &&
-      'detailsUrl' in pokemon
-    ) {
+    if (typeof pokemon === "object" && pokemon.name && pokemon.detailsUrl) {
       pokemonList.push(pokemon);
     } else {
-      console.error('Invalid Pokémon:', pokemon);
+      // mbrojtje minimale kundër input-eve të gabuara
+      console.error("Invalid Pokémon object", pokemon);
     }
   }
 
@@ -44,26 +17,38 @@ let pokemonRepository = (function () {
     return pokemonList;
   }
 
-  // Krijon një <li> + <button> për çdo Pokémon
+  // Krijon një <li> me button Bootsrap për çdo Pokémon
   function addListItem(pokemon) {
-    let listElement = document.querySelector('.pokemon-list');
-    let listItem = document.createElement('li');
-    let button = document.createElement('button');
+    const list = document.querySelector(".pokemon-list");
 
-    button.innerText = pokemon.name; // CSS bën capitalize
-    button.classList.add('pokemon-button');
+    const listItem = document.createElement("li");
+    // list-group-item është nga Bootstrap List Group
+    listItem.classList.add("list-group-item");
 
-    listItem.appendChild(button);
-    listElement.appendChild(listItem);
+    const button = document.createElement("button");
+    button.innerText = pokemon.name;
+    // klasa jote + klasa të Bootstrap
+    button.classList.add(
+      "pokemon-list__button",
+      "btn",
+      "btn-primary",
+      "btn-block",
+      "text-capitalize"
+    );
 
-    button.addEventListener('click', function () {
+    // i themi Bootstrap-it që ky buton hap modalin me id #pokemon-modal
+    button.setAttribute("data-toggle", "modal");
+    button.setAttribute("data-target", "#pokemon-modal");
+
+    // kur klikohet, ne e mbushim modalin me të dhënat e Pokémon-it
+    button.addEventListener("click", function () {
       showDetails(pokemon);
     });
+
+    listItem.appendChild(button);
+    list.appendChild(listItem);
   }
 
-  // =========================
-  //   NGARKIMI NGA API
-  // =========================
   function loadList() {
     showLoadingMessage();
     return fetch(apiUrl)
@@ -71,205 +56,139 @@ let pokemonRepository = (function () {
         return response.json();
       })
       .then(function (json) {
+        hideLoadingMessage();
         json.results.forEach(function (item) {
-          let pokemon = {
+          const pokemon = {
             name: item.name,
-            detailsUrl: item.url
+            detailsUrl: item.url,
           };
           add(pokemon);
         });
-        hideLoadingMessage();
       })
       .catch(function (e) {
-        console.error(e);
         hideLoadingMessage();
+        console.error(e);
       });
   }
 
   function loadDetails(pokemon) {
     showLoadingMessage();
-    let url = pokemon.detailsUrl;
-    return fetch(url)
+    return fetch(pokemon.detailsUrl)
       .then(function (response) {
         return response.json();
       })
       .then(function (details) {
-        // kërkesat e ushtrimit: imageUrl dhe height
+        hideLoadingMessage();
+        // shtojmë detajet që na duhen për modal
         pokemon.imageUrl = details.sprites.front_default;
         pokemon.height = details.height;
-        pokemon.types = details.types;
-        hideLoadingMessage();
+        pokemon.types = details.types.map(function (typeItem) {
+          return typeItem.type.name;
+        });
       })
       .catch(function (e) {
-        console.error(e);
         hideLoadingMessage();
+        console.error(e);
       });
   }
 
-  // =========================
-  //         MODAL
-  // =========================
-  function showModal(title, text, imgUrl) {
-    // pastro modal-in
-    modalContainer.innerHTML = '';
+  // mbush modalin Bootstrap me të dhënat e Pokémon-it
+  function showModal(pokemon) {
+    const modalTitle = document.querySelector("#pokemon-modal-label");
+    const modalBody = document.querySelector("#pokemon-modal .modal-body");
 
-    // krijo kutinë e modal-it
-    let modal = document.createElement('div');
-    modal.classList.add('modal');
-
-    // butoni i mbylljes
-    let closeButtonElement = document.createElement('button');
-    closeButtonElement.classList.add('modal-close');
-    closeButtonElement.innerText = 'X';
-    closeButtonElement.addEventListener('click', hideModal);
+    // pastrojmë përmbajtjen e vjetër
+    modalTitle.innerText = "";
+    modalBody.innerHTML = "";
 
     // titulli
-    let titleElement = document.createElement('h1');
-    titleElement.innerText = title;
+    modalTitle.innerText = pokemon.name;
 
-    // figura
-    let imageElement = document.createElement('img');
-    imageElement.src = imgUrl;
-    imageElement.alt = title + ' image';
+    // imazhi
+    const imageElement = document.createElement("img");
+    imageElement.classList.add("pokemon-image", "img-fluid");
+    imageElement.src = pokemon.imageUrl;
+    imageElement.alt = `Image of ${pokemon.name}`;
 
-    // teksti (height)
-    let contentElement = document.createElement('p');
-    contentElement.innerText = text;
+    // lartësia
+    const heightElement = document.createElement("p");
+    heightElement.classList.add("pokemon-height");
+    heightElement.innerText = `Height: ${pokemon.height}`;
 
-    // vendos elementët në modal
-    modal.appendChild(closeButtonElement);
-    modal.appendChild(titleElement);
-    modal.appendChild(imageElement);
-    modal.appendChild(contentElement);
+    // tipet
+    const typesElement = document.createElement("p");
+    typesElement.classList.add("pokemon-types");
+    typesElement.innerText = `Types: ${pokemon.types.join(", ")}`;
 
-    // fut modal-in në container
-    modalContainer.appendChild(modal);
-
-    // shfaq modal-in
-    modalContainer.classList.add('is-visible');
+    // shtojmë në modal-body
+    modalBody.appendChild(imageElement);
+    modalBody.appendChild(heightElement);
+    modalBody.appendChild(typesElement);
   }
 
-  function hideModal() {
-    modalContainer.classList.remove('is-visible');
-  }
-
-  // Mbyll me ESC
-  window.addEventListener('keydown', function (e) {
-    if (
-      e.key === 'Escape' &&
-      modalContainer.classList.contains('is-visible')
-    ) {
-      hideModal();
-    }
-
-    // BONUS: kalim me shigjeta majtas/djathtas
-    if (e.key === 'ArrowRight') {
-      showNextPokemon();
-    }
-    if (e.key === 'ArrowLeft') {
-      showPreviousPokemon();
-    }
-  });
-
-  // Mbyll kur klikon jashtë kutisë së bardhë
-  modalContainer.addEventListener('click', function (e) {
-    if (e.target === modalContainer) {
-      hideModal();
-    }
-  });
-
-  // =========================
-  //   BONUS 2: SWIPE & NEXT/PREV
-  // =========================
-
-  // ruaj pozicionin e nisjes së swipe
-  let swipeStartX = null;
-
-  // pointerdown – fillimi i swipe
-  modalContainer.addEventListener('pointerdown', function (e) {
-    swipeStartX = e.clientX;
-  });
-
-  // pointerup – fundi i swipe, vendosim drejtimin
-  modalContainer.addEventListener('pointerup', function (e) {
-    if (swipeStartX === null) {
-      return;
-    }
-
-    let diffX = e.clientX - swipeStartX;
-
-    // prag i vogël që të mos reagojë për klikime të vogla
-    if (Math.abs(diffX) > 50) {
-      if (diffX < 0) {
-        // swipe majtas → Pokémon-i tjetër
-        showNextPokemon();
-      } else {
-        // swipe djathtas → Pokémon-i i mëparshëm
-        showPreviousPokemon();
-      }
-    }
-
-    swipeStartX = null;
-  });
-
-  function showNextPokemon() {
-    if (currentPokemonIndex === null) {
-      return;
-    }
-
-    let nextIndex = currentPokemonIndex + 1;
-    if (nextIndex >= pokemonList.length) {
-      nextIndex = 0; // kalo në fillim nëse je në fund
-    }
-
-    let nextPokemon = pokemonList[nextIndex];
-    showDetails(nextPokemon);
-  }
-
-  function showPreviousPokemon() {
-    if (currentPokemonIndex === null) {
-      return;
-    }
-
-    let prevIndex = currentPokemonIndex - 1;
-    if (prevIndex < 0) {
-      prevIndex = pokemonList.length - 1; // kalo në fund nëse je në fillim
-    }
-
-    let prevPokemon = pokemonList[prevIndex];
-    showDetails(prevPokemon);
-  }
-
-  // =========================
-  //   DETAJET E POKÉMON-IT
-  // =========================
+  // thërret loadDetails dhe më pas showModal
   function showDetails(pokemon) {
-    // ruaj indeksin aktual (për next/prev/swipe)
-    currentPokemonIndex = pokemonList.indexOf(pokemon);
-
     loadDetails(pokemon).then(function () {
-      showModal(
-        pokemon.name,
-        'Height: ' + pokemon.height,
-        pokemon.imageUrl
-      );
+      showModal(pokemon);
+      // vetë Bootstrap e hap modalin për shkak të data-toggle/data-target
     });
   }
 
-  // Kthe funksionet publike
+  // kërkim i thjeshtë në listë
+  function search(query) {
+    const normalized = query.trim().toLowerCase();
+    if (!normalized) {
+      return getAll();
+    }
+
+    return getAll().filter(function (pokemon) {
+      return pokemon.name.toLowerCase().indexOf(normalized) !== -1;
+    });
+  }
+
+  function resetList() {
+    const list = document.querySelector(".pokemon-list");
+    list.innerHTML = "";
+  }
+
+  function showLoadingMessage() {
+    const alertElement = document.querySelector(".alert--info");
+    if (alertElement) {
+      alertElement.style.display = "block";
+      alertElement.innerText = "Loading...";
+    }
+  }
+
+  function hideLoadingMessage() {
+    const alertElement = document.querySelector(".alert--info");
+    if (alertElement) {
+      alertElement.style.display = "none";
+    }
+  }
+
   return {
     add: add,
     getAll: getAll,
     addListItem: addListItem,
     loadList: loadList,
     loadDetails: loadDetails,
-    showDetails: showDetails
+    showDetails: showDetails,
+    search: search,
+    resetList: resetList,
   };
 })();
 
-// Ngarko listën dhe shfaq butonat
+// fillojmë aplikacionin
 pokemonRepository.loadList().then(function () {
   pokemonRepository.getAll().forEach(function (pokemon) {
+    pokemonRepository.addListItem(pokemon);
+  });
+});
+
+// event për kërkimin live
+document.querySelector("#search").addEventListener("input", function (e) {
+  pokemonRepository.resetList();
+  pokemonRepository.search(e.target.value).forEach(function (pokemon) {
     pokemonRepository.addListItem(pokemon);
   });
 });

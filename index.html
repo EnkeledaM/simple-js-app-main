@@ -1,30 +1,174 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pokémon App</title>
+  <head>
+    <meta charset="utf-8" />
+    <!-- Bootstrap kërkon këtë meta për layout responsiv -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-  <!-- CSS file -->
-  <link rel="stylesheet" href="css/styles.css" />
-</head>
-<body>
+    <title>Simple JS App – Pokédex</title>
 
-  <h1>Pokémon List</h1>
+    <!-- Fonti (si më parë) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
 
-  <!-- Këtu do të futen butonat e Pokemon nga scripts.js -->
-  <ul class="pokemon-list"></ul>
+    <!-- Normalize (opsionale, mund ta lësh si në ushtrimet e mëparshme) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+      integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 
-  <!-- Container për modal-in e detajeve -->
-  <div id="modal-container"></div>
+    <!-- Bootstrap CSS nga CDN – DUHET para styles.css që ta mbishkruash nëse do -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
 
-  <!-- Polyfills – duhet të vijnë PARA scripts.js -->
-  <script src="js/promise-polyfill.js"></script>
-  <script src="js/fetch-polyfill.js"></script>
+    <!-- Stilet e tua -->
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
 
-  <!-- JavaScript kryesor -->
-  <script src="js/scripts.js"></script>
+  <body>
+    <!-- Mesazhi i "Loading..." që ke pasur që nga 1.7/1.8 – tani me klasat Bootstrap -->
+    <div class="alert alert-info alert--info text-center" role="status">
+      Loading...
+    </div>
 
-</body>
+    <!-- NAVBAR Bootstrap – responsive, me search dhe link -->
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+      <a class="navbar-brand" href="/">Pokédex</a>
+
+      <!-- Butoni “hamburger” për mobil -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#mainNavbar"
+        aria-controls="mainNavbar"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Pjesa që rrëzohet (collapse) në ekranet e vogla -->
+      <div class="collapse navbar-collapse" id="mainNavbar">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/">
+              Home <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="https://pokeapi.co/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              PokéAPI
+            </a>
+          </li>
+        </ul>
+
+        <!-- Search field si form-inline Bootstrap -->
+        <form class="form-inline my-2 my-lg-0">
+          <input
+            id="search"
+            class="form-control mr-sm-2"
+            type="text"
+            placeholder="Search Pokémon"
+            aria-label="Search Pokémon"
+          />
+        </form>
+      </div>
+    </nav>
+
+    <!-- Përmbajtja kryesore në container Bootstrap -->
+    <main role="main" class="container">
+      <div class="starter-template">
+        <h1 class="mb-4">Pokédex</h1>
+
+        <!-- Lista e Pokémon-eve – tani si List Group Bootstrap -->
+        <ul class="pokemon-list list-group"></ul>
+      </div>
+    </main>
+
+    <!-- ===== Bootstrap Modal për detajet e Pokémon ===== -->
+    <div
+      class="modal fade"
+      id="pokemon-modal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="pokemon-modal-label"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <!-- titulli ndryshohet nga JavaScript -->
+            <h5 class="modal-title text-capitalize" id="pokemon-modal-label"></h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <!-- Trupi i modalit mbushet nga showModal(pokemon) -->
+          <div class="modal-body"></div>
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Polyfills si më parë -->
+    <script src="js/promise-polyfill.js"></script>
+    <script src="js/fetch.umd.js"></script>
+
+    <!-- jQuery (version core, jo slim – e njëjta seri versioni me Bootstrap 4.3.1) -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Popper – dependency e Bootstrap-it për tooltip, dropdown, modal-positioning -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Bootstrap JS -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Skripti yt -->
+    <script src="js/scripts.js"></script>
+  </body>
 </html>
+
