@@ -1,9 +1,14 @@
-# Exercise 1.8 – Pokémon App  
+
+# Exercise 1.10 – Bootstrap & UI Libraries (Pokédex App)
+
 CareerFoundry – Intro to JavaScript / AJAX & API Interactions
 
 ## 📌 Overview  
-This project is part of Exercise 1.8, where the goal was to build a small JavaScript application that loads data from an external API (PokeAPI), displays the results dynamically, and shows item details inside a modal window.  
-The entire logic is implemented using an IIFE and follows the patterns learned in this exercise.
+This project was initially created in earlier exercises and has been extended in Exercise 1.10 to include Bootstrap and UI libraries, improving layout, responsiveness, and overall user experience.
+
+## UI Improvements (Exercise 1.10)
+
+In this exercise, Bootstrap 4.3.1 was integrated into the existing Pokédex application to improve the user interface and responsiveness. A Bootstrap navbar, list-group layout, and modal component were added. The modal is triggered using Bootstrap data attributes, while the content (Pokémon name, image, height, and types) is dynamically loaded from the PokéAPI using JavaScript.
 
 ---
 
@@ -41,4 +46,3 @@ These additions improve usability and demonstrate interactivity beyond the base 
 
 ---
 
-## 📁 File Structure
