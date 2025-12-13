@@ -1,102 +1,24 @@
-/* Baza e faqes */
+/* Base page styles */
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Roboto", Arial, sans-serif;
+  font-weight: 400;
+  font-style: normal;
   margin: 0;
-  padding: 20px;
   background-color: #f5f5f5;
+
+  /* If you use navbar fixed-top */
+  padding-top: 5rem;
+
+  /* If you still want side padding, keep this */
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 h1 {
   text-align: center;
 }
 
-/* Lista e Pokémon-ëve */
-.pokemon-list {
-  list-style: none;
-  padding: 0;
-  margin: 20px auto;
-  max-width: 400px;
-}
-
-.pokemon-list li {
-  margin-bottom: 10px;
-}
-
-/* Butonat e Pokémon-ëve */
-.pokemon-button {
-  width: 100%;
-  padding: 10px;
-  border: none;
-  background-color: #ffcb05;
-  color: #2a75bb;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.pokemon-button:hover {
-  background-color: #f5b800;
-}
-
-/* ========================= */
-/*        MODAL 1.8          */
-/* ========================= */
-
-/* Fshi modal-in në fillim */
-#modal-container {
-  display: none;
-}
-
-/* Shfaq kur ka klasën .is-visible */
-#modal-container.is-visible {
-  position: fixed;
-  padding: 20px;
-  box-sizing: border-box;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-
-  z-index: 999;
-  overflow: auto;
-  display: grid;
-  text-align: center;
-}
-
-/* Kutia e bardhë e modal-it */
-.modal {
-  background: white;
-  margin: auto;
-  padding: 20px;
-  max-width: 400px;
-}
-
-/* Butoni i mbylljes në modal */
-.modal-close {
-  float: right;
-  border: none;
-  background: none;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-/* Figura e Pokémon-it – responsive */
-.modal img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 10px auto;
-}
-body {
-  font-family: "Roboto", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  /* për navbar fixed-top që të mos mbulojë përmbajtjen */
-  padding-top: 5rem;
-}
-
-/* Mesazhi i loading – pozicionim në krye të faqes */
+/* Loading message */
 .alert--info {
   position: fixed;
   top: 0;
@@ -104,29 +26,39 @@ body {
   transform: translateX(-50%);
   border-radius: 0 0 5px 5px;
   font-size: 0.9rem;
-  z-index: 1031; /* pak mbi navbar-in */
+  z-index: 1031;
 }
 
-/* Container pak më i ngushtë në ekran të madh (opsionale) */
+/* Optional container spacing */
 .starter-template {
   padding: 3rem 1.5rem;
   text-align: center;
 }
 
-/* Stil i butonave të listës (shtesë mbi Bootstrap) */
+/* List button style (extra on top of Bootstrap) */
 .pokemon-list__button {
   width: 100%;
   text-align: left;
 }
 
-/* Figura në modal – qendër, responsive */
-.pokemon-image {
+/* Center Pokémon image inside Bootstrap modal */
+.modal-body .pokemon-image {
   display: block;
   margin: 0 auto 1rem;
 }
 
-/* Tekstet në modal */
-.pokemon-height,
-.pokemon-types {
+/* Small spacing for modal text */
+.modal-body .pokemon-height,
+.modal-body .pokemon-types {
   margin-bottom: 0.5rem;
 }
+
+/* Optional: make modal a bit narrower on large screens */
+.modal-dialog {
+  max-width: 520px;
+}
+.pokemon-list {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
